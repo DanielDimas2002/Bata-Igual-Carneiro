@@ -26,31 +26,39 @@ function addPlayer() {
 }
 
 function updateTable() {
-  const tbody = document.getElementById("playersTable").getElementsByTagName("tbody")[0];
-  tbody.innerHTML = ""; // Limpa a tabela
-
-  players.forEach((player, index) => {
-    const totalGames = player.victories + player.defeats;
-    const winRate = totalGames > 0 ? (player.victories / totalGames * 100).toFixed(2) : 0;
-
-    const row = document.createElement("tr");
-
-    row.innerHTML = `
-      <td contenteditable="true">${player.name}</td>
-      <td>${player.victories}</td>
-      <td>${player.defeats}</td>
-      <td>${totalGames}</td>
-      <td>${winRate}%</td>
-      <td>
-        <button onclick="updateStats(${index}, 'victory')">Vitória +</button>
-        <button onclick="updateStats(${index}, 'defeat')">Derrota +</button>
-        <button class="delete" onclick="deletePlayer(${index})">Deletar</button>
-      </td>
-    `;
-
-    tbody.appendChild(row);
-  });
-}
+    const tbody = document.getElementById("playersTable").getElementsByTagName("tbody")[0];
+    tbody.innerHTML = ""; // Limpa a tabela
+  
+    // Ordena os jogadores pelo win rate (decrescente)
+    players.sort((a, b) => {
+      const winRateA = a.victories / (a.victories + a.defeats) || 0;
+      const winRateB = b.victories / (b.victories + b.defeats) || 0;
+      return winRateB - winRateA; // Ordena de forma decrescente
+    });
+  
+    players.forEach((player, index) => {
+      const totalGames = player.victories + player.defeats;
+      const winRate = totalGames > 0 ? (player.victories / totalGames * 100).toFixed(2) : 0;
+  
+      const row = document.createElement("tr");
+  
+      row.innerHTML = `
+        <td contenteditable="true">${player.name}</td>
+        <td>${player.victories}</td>
+        <td>${player.defeats}</td>
+        <td>${totalGames}</td>
+        <td>${winRate}%</td>
+        <td>
+          <button onclick="updateStats(${index}, 'victory')">Vitória +</button>
+          <button onclick="updateStats(${index}, 'defeat')">Derrota +</button>
+          <button class="delete" onclick="deletePlayer(${index})">Deletar</button>
+        </td>
+      `;
+  
+      tbody.appendChild(row);
+    });
+  }
+  
 
 function updateStats(index, type) {
   if (type === "victory") {
