@@ -58,7 +58,14 @@ function updateTable() {
       tbody.appendChild(row);
     });
   }
+ 
   
+  // Adiciona um ouvinte para detectar a tecla "Enter" no campo de entrada
+document.getElementById("playerName").addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    addPlayer(); // Chama a função para adicionar o jogador
+  }
+});
 
 function updateStats(index, type) {
   if (type === "victory") {
@@ -87,3 +94,4 @@ function savePlayers() {
 
 // Carrega os dados do localStorage ao carregar a página
 window.onload = updateTable;
+
