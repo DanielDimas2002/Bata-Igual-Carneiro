@@ -49,8 +49,8 @@ function updateTable() {
         <td>${totalGames}</td>
         <td>${winRate}%</td>
         <td>
-          <button onclick="updateStats(${index}, 'victory')">Vitória +</button>
-          <button onclick="updateStats(${index}, 'defeat')">Derrota +</button>
+          <button onclick="updateStats(${index}, 'victory')">Vit+</button>
+          <button onclick="updateStats(${index}, 'defeat')">Der+</button>
           <button class="delete" onclick="deletePlayer(${index})">Deletar</button>
         </td>
       `;
